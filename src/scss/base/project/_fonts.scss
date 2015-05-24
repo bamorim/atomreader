@@ -7,4 +7,7 @@
   @include importFont('Droid Serif', 'DroidSerif-Bold', $isBold: true);
   @include importFont('Droid Serif', 'DroidSerif-BoldItalic', $isBold: true, $isItalic: true);
   @include importFont('Droid Serif', 'DroidSerif-Italic', $isItalic: true);
+  @include importFont('Cardo', 'Cardo104s');
+  @include importFont('Cardo', 'Cardob101', $isBold: true);
+  @include importFont('Cardo', 'Cardoi99',$isItalic: true);
 }
