@@ -3,15 +3,8 @@
 
   /* _____ FONTS _____ */
 
-  @include importFont('Lato', 'Lato-Regular');
-  @include importFont('Lato', 'Lato-Bold', $isBold: true);
-  @include importFont('Lato', 'Lato-Light', $isLight: true);
   @include importFont('Droid Serif', 'DroidSerif');
   @include importFont('Droid Serif', 'DroidSerif-Bold', $isBold: true);
   @include importFont('Droid Serif', 'DroidSerif-BoldItalic', $isBold: true, $isItalic: true);
   @include importFont('Droid Serif', 'DroidSerif-Italic', $isItalic: true);
-  //@include importFont('titillium', 'titilliumweb-bold-webfont', 'titillium_webbold', $isBold: true);
-  //@include importFont('robotoSlab', 'robotoslab-regular-webfont', 'roboto_slabregular');
-  //@include importFont('robotoSlab', 'robotoslab-bold-webfont', 'roboto_slabbold', $isBold: true);
-
 }
