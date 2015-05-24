@@ -19,8 +19,13 @@
   }
 
   body {
-    @include remIt(font-size, 22);
-    line-height: 1.6;
+    @include breakpoint(small){
+      @include remIt(font-size, 22);
+      line-height: 1.6;
+    }
+
+    @include remIt(font-size, 19);
+    line-height: 1.4;
     background: $color-bg;
     font-family: "Cardo", "Droid Serif", "serif";
     width: 100%;
