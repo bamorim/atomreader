@@ -66,6 +66,7 @@ gulp.task('dist',['webpack'], function(){
 });
 
 gulp.task('publish', ['dist'], function(){
-  gulp.src("dist/bundle.js")
-    .pipe(ghPages({force: true}));
+  gulp.src(["dist/**/*"])
+    .pipe(ghPages())
+    .pipe(gulp.dest("dist")); // For some weird reason gh-pages are not commiting and doing stuff
 });
