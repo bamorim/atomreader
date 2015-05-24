@@ -6,14 +6,16 @@ var eslint = require('gulp-eslint');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 
-var webpackConfig = require('./webpack.config.js');
+var webpackDevConfig = require('./webpack.config.dev.js');
 var webpackStatsConfig = {
   colors: true,
   chunks: false
 }
 
+var webpackConfig = require('./webpack.config.js');
+
 gulp.task('webpack-server', function(callback){
-  var compiler = webpack(webpackConfig);
+  var compiler = webpack(webpackDevConfig);
   new WebpackDevServer(compiler, {
     contentBase: __dirname+"/build",
     stats: webpackStatsConfig,
@@ -26,7 +28,7 @@ gulp.task('webpack-server', function(callback){
 
 gulp.task('prepare-dev-server',function(){
   gulp.src("src/index.html")
-    .pipe(gulp.dest("build/"));
+  .pipe(gulp.dest("build/"));
 });
 
 gulp.task('server', ['webpack-server', 'prepare-dev-server']);
@@ -35,10 +37,35 @@ gulp.task('server', ['webpack-server', 'prepare-dev-server']);
 
 gulp.task('lint', function(){
   gulp.src("src/**/*.js")
-    .pipe(eslint())
-    .pipe(eslint.format());
+  .pipe(eslint())
+  .pipe(eslint.format());
 });
 
 gulp.task('watch-lint', function(callback){
   gulp.watch("src/**/*.js", ['lint']);
+});
+
+// Building
+
+gulp.task('webpack', function(callback){
+  webpack(webpackConfig, function(err,stats){
+    if(err) throw new gutil.PluginError("webpack", err);
+    gutil.log("[webpack]", stats.toString(webpackStatsConfig));
+    callback();
+  })
+});
+
+// Distribution
+var removeCode = require('gulp-remove-code');
+var ghPages = require('gulp-gh-pages');
+
+gulp.task('dist',['webpack'], function(){
+  gulp.src("src/index.html")
+    .pipe(removeCode({production: true}))
+    .pipe(gulp.dest("dist"))
+});
+
+gulp.task('publish', ['dist'], function(){
+  gulp.src("dist/bundle.js")
+    .pipe(ghPages({force: true}));
 });
