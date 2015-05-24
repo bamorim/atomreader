@@ -13,7 +13,7 @@ class HomeHandler extends React.Component {
     console.log(posts[0]);
     return (
       <div className="wrapper">
-        <h1>Welcome to the blog reader</h1>
+        <h1>Miado Importado</h1>
         <ul>
           { posts.map((p) => <li><Link to={"/posts/"+p.uri}>{p.title}</Link></li>) }
         </ul>

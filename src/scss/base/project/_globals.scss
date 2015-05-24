@@ -21,11 +21,12 @@
   body {
     @include remIt(font-size, 22);
     line-height: 1.6;
-    background: #f3f3f3;
+    background: $color-bg;
     font-family: "Cardo", "Droid Serif", "serif";
     width: 100%;
     color: #000;
     min-height: 100%;
+    padding-bottom: 50px;
   }
 
   h1 {
@@ -42,10 +43,18 @@
 
   a,
   a:visited {
+    display: inline-block;
+    color: $color-link;
+    text-decoration:none;
+
+  }
+  a:hover {
+    color: $color-link-hover;
+    text-decoration:underline;
   }
 
   ul {
-    list-style: square;
+    list-style: disc outside;
   }
 
   b {
