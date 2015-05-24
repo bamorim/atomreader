@@ -18,8 +18,10 @@ class PostHandler extends React.Component {
 
 export default connectToStores(PostHandler,{
   posts: (store, {params}) => {
+    console.log(params);
+    console.log(store);
     return {
-      post: store.getPost(params.splat)
+      post: store.getPost(params.blogId, params.splat)
     };
   }
 });

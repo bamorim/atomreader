@@ -6,18 +6,24 @@ class PostStore extends Store {
     const postActionIds = flux.getActionIds("posts");
 
     this.register(postActionIds.getPosts, this.handlePosts);
-    this.state = {
-      posts: []
-    }
+    this.state = {}
   }
 
-  handlePosts(posts) {
-    this.setState({ posts });
+  handlePosts({blogId, info}) {
+    this.setState({ [blogId]: info });
   }
 
-  getPost(uri) {
+  getInfo(blogId){
+    return this.state[blogId] || {};
+  }
+
+  getPosts(blogId) {
+    return this.getInfo(blogId).entries || [];
+  }
+
+  getPost(blogId, uri) {
     let fullUri = uri[0] == '/' ? uri : "/"+uri;
-    return this.state.posts.filter((p) => p.uri == fullUri)[0];
+    return this.getPosts(blogId).filter((p) => p.uri == fullUri)[0];
   }
 }
 

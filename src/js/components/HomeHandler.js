@@ -1,26 +1,54 @@
 import React from "react";
 import { RouteHandler, Link } from "react-router";
+import connectToStores from "flummox/connect";
 
 class HomeHandler extends React.Component {
-  static async routerWillRun({flux, state}){
-    const postActions = flux.getActions("posts");
+  componentDidMount(){
+    document.title = this.props.title + " - ReactReader";
+  }
 
-    return await postActions.getPosts();
+  uriFor(post){
+    return "/"+this.props.blogId+post.uri;
+  }
+
+  renderPostItem(post){
+    let uri = this.uriFor(post);
+    return (
+      <li>
+        <Link to={this.uriFor(post)}>{post.title}</Link>
+      </li>
+    );
   }
 
   render(){
-    let { posts } = this.props;
-    console.log(posts[0]);
+    let { posts, title } = this.props;
     return (
       <div className="wrapper">
-        <h1>Miado Importado</h1>
+        <h1>{title}</h1>
         <ul>
-          { posts.map((p) => <li><Link to={"/posts/"+p.uri}>{p.title}</Link></li>) }
+          { posts.map((p) => this.renderPostItem(p)) }
         </ul>
         <RouteHandler/>
       </div>
     );
   }
+}
+
+HomeHandler = connectToStores(HomeHandler,{
+  posts: (store, {params}) => {
+    let { entries, title } = store.getInfo(params.blogId);
+    return {
+      title,
+      posts: entries,
+      blogId: params.blogId
+    };
+  }
+});
+
+HomeHandler.routerWillRun = async function({flux, state}){
+  const postActions = flux.getActions("posts");
+
+  return await postActions.getPosts(state.params.blogId);
 }
 
 export default HomeHandler;
