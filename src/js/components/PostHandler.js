@@ -3,11 +3,14 @@ import connectToStores from "flummox/connect";
 
 class PostHandler extends React.Component {
   render(){
-    let { title, content } = this.props.post;
+    let { title, content, author, date } = this.props.post;
     return (
-      <div>
-        <h1>{title}</h1>
-        <div dangerouslySetInnerHTML={{__html: content}} />
+      <div className="blog-post">
+        <header>
+          <h1>{title}</h1>
+          <p>Por {author} em <time>{date.format("LLLL")}</time></p>
+        </header>
+        <article dangerouslySetInnerHTML={{__html: content}} />
       </div>
     );
   }

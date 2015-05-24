@@ -1,10 +1,11 @@
 import { Actions } from "flummox";
 import request from "superagent";
+import moment from "moment";
 
 function parseEntry(entry) {
   let { title, link, content, author, contentSnippet, publishedDate, categories} = entry;
   let uri = link.match(/http:\/\/[^\/]+(.*)/)[1]
-  let date = publishedDate; //Add moment.js later
+  let date = moment(publishedDate);
 
   return { title, uri, content, author, contentSnippet, date, categories };
 }
